@@ -38,17 +38,33 @@
                     <p>As a Junior Developer, I specialize in programming with a focus on HTML, CSS, JavaScript, SQL, and Python. Passionate about building efficient web designs and applications, I am continuously learning and eager to tackle new challenges in coding and software development.</p>
 
                     <div class="tab-titles">
-                        <p class="tab-links active-link">Skills</p>
-                        <p class="tab-links">Experience</p>
-                        <p class="tab-links">Education</p>
+                        <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                        <p class="tab-links" onclick="opentab('experience')">Experience</p>
+                        <p class="tab-links" onclick="opentab('education')">Education</p>
                     </div>
 
-                    <div class="tab-contents">
+                    <div class="tab-contents active-tab" id="skills">
                         <ul>
-                             <li><span>Web Development</span><br>Web app Development</li>
-                             <li><span>Web Design</span><br>Building and designing web interfaces</li>
-                             <li><span>Version control</span><br>Experience with version control systems like Git</li>
+                            <li><span>Web Development</span><br>Web app Development</li>
+                            <li><span>Web Design</span><br>Building and designing web interfaces</li>
+                            <li><span>Version control</span><br>Experience with version control systems like Git</li>
 
+                        </ul>
+                    </div>
+
+                    <div class="tab-contents" id="experience">
+                        <ul>
+                            <li><span>2023-Current</span><br>Learning new programming languages at NPC</li>
+                            <li><span>2019-2022</span><br>Building and designing web interfaces</li>
+                            <li><span>2017-2018</span><br>Training beginners to junior developers</li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-contents" id="education">
+                        <ul>
+                            <li><span>2023-Current</span><br>University of Rwanda</li>
+                            <li><span>2022</span><br>Learn MCE at GS K 1</li>
+                            <li><span>2018</span><br>Completion of  O'level in High School</li>
                         </ul>
                     </div>
                 </div>
