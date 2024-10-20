@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In / Sign Up</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      display: none;
+      flex-direction: column;
+    }
+    form.active {
+      display: flex;
+    }
+    label {
+      margin: 10px 0 5px;
+    }
+    input, button, select {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .toggle {
+      text-align: center;
+      cursor: pointer;
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2 id="form-title">Sign In</h2>
+
+    <!-- Sign-in Form -->
+    <form id="sign-in-form" class="active">
+      <label for="contact-signin">Contact</label>
+      <input type="text" id="contact-signin" required>
+
+      <label for="password-signin">Password</label>
+      <input type="password" id="password-signin" required>
+
+      <button type="button" onclick="signIn()">Sign In</button>
+      <p class="toggle" onclick="toggleForm()">Don't have an account? Sign Up</p>
+    </form>
+
+    <!-- Sign-up Form -->
+    <form id="sign-up-form">
+      <label for="name">Name</label>
+      <input type="text" id="name" required>
+
+      <label for="contact-signup">Contact</label>
+      <input type="text" id="contact-signup" required>
+
+      <label for="email">Email (Optional)</label>
+      <input type="email" id="email">
+
+      <label for="password-signup">Password</label>
+      <input type="password" id="password-signup" required>
+
+      <label for="language">Preferred Language</label>
+      <select id="language" required>
+        <option value="en">English</option>
+        <option value="rw">Kinyarwanda</option>
+      </select>
+
+      <button type="button" onclick="signUp()">Sign Up</button>
+      <p class="toggle" onclick="toggleForm()">Already have an account? Sign In</p>
+    </form>
+  </div>
+
+  <script>
+    // Toggle between Sign-in and Sign-up forms
+    function toggleForm() {
+      const signInForm = document.getElementById('sign-in-form');
+      const signUpForm = document.getElementById('sign-up-form');
+      const formTitle = document.getElementById('form-title');
+
+      if (signInForm.classList.contains('active')) {
+        signInForm.classList.remove('active');
+        signUpForm.classList.add('active');
+        formTitle.textContent = 'Sign Up';
+      } else {
+        signUpForm.classList.remove('active');
+        signInForm.classList.add('active');
+        formTitle.textContent = 'Sign In';
+      }
+    }
+
+    // Sign-up function
+    async function signUp() {
+      const name = document.getElementById('name').value;
+      const contact = document.getElementById('contact-signup').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password-signup').value;
+      const language = document.getElementById('language').value;
+
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, contact, email, password, language })
+      });
+
+      const result = await response.json();
+      alert(result.message);
+    }
+
+    // Sign-in function
+    async function signIn() {
+      const contact = document.getElementById('contact-signin').value;
+      const password = document.getElementById('password-signin').value;
+
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contact, password })
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        alert('Login successful!');
+      } else {
+        alert('Invalid credentials!');
+      }
+    }
+  </script>
+
+</body>
+</html>
