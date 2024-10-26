@@ -94,7 +94,7 @@ form p a{
 
 .input-group{
     height: 280px;
-    margin-bottom:  0;
+    margin-bottom: -10px;
 }
 
 .btn-field button.disable{
