@@ -73,7 +73,7 @@
     </div>
 
     <script>
-
+        
         let signUpBtn = document.getElementById("signUpBtn");
         let signInBtn = document.getElementById("signInBtn");
         let messageBox = document.getElementById("messageBox");
@@ -85,6 +85,7 @@
         let resetPasswordForm = document.getElementById("resetPasswordForm");
         let mainForm = document.getElementById("mainForm");
         let backToSignIn = document.getElementById("backToSignIn");
+        let resetPasswordBtn = document.getElementById("resetPasswordBtn");
 
         // Switch to Sign In form
         signInBtn.onclick = function () {
@@ -201,6 +202,57 @@
                 messageBox.style.display = "block";
             }
         });
+
+        // Handle Reset Password form submission
+        resetPasswordBtn.onclick = async function () {
+            const contact = document.getElementById("resetContact").value;
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            // Clear any existing messages
+            messageBox.textContent = "";
+            messageBox.style.display = "none";
+
+            // Simple validation to check if the required fields are filled
+            if (!contact || !newPassword || !confirmPassword) {
+                messageBox.textContent = "All fields are required.";
+                messageBox.style.display = "block";
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                messageBox.textContent = "New password and confirm password do not match.";
+                messageBox.style.display = "block";
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:3000/reset-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ contact, newPassword, confirmPassword }),
+                });
+
+                const result = await response.json();
+                messageBox.textContent = result.message;
+                messageBox.style.display = "block";
+
+                if (response.ok) {
+                    // Clear the reset form after successful password reset
+                    setTimeout(() => {
+                        messageBox.style.display = "none";
+                        document.getElementById("resetPasswordForm").reset();
+                        // Optionally switch back to sign-in form
+                        resetPasswordForm.style.display = "none";
+                        mainForm.style.display = "block";
+                    }, 2000);
+                }
+            } catch (error) {
+                console.error("Error during password reset:", error);
+                messageBox.textContent = "Failed to reset password. Please try again.";
+                messageBox.style.display = "block";
+            }
+        };
     </script>
 </body>
 </html>
